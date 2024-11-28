@@ -3,6 +3,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+jobhunt-html/*
+sample/*
 
 ### STS ###
 .apt_generated
@@ -31,3 +33,27 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+job-seeker/node_modules
+job-seeker/.pnp
+job-seeker/.pnp.js
+
+# testing
+job-seeker/coverage
+
+# production
+job-seeker/build
+
+# misc
+job-seeker/.DS_Store
+job-seeker/.env.local
+job-seeker/.env.development.local
+job-seeker/.env.test.local
+job-seeker/.env.production.local
+
+job-seeker/npm-debug.log*
+job-seeker/yarn-debug.log*
+job-seeker/yarn-error.log*
