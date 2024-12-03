@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SignupForm from "./signupForm";
 import { SigninForm } from "./signinForm";
 
-const Header = () => {
+export const Header = () => {
   const [isSigninOpen, setIsSigninOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
@@ -772,4 +772,3 @@ const Header = () => {
   );
 };
 
-export { Header };
