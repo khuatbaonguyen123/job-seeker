@@ -1,0 +1,18 @@
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px; /* Optional for spacing */
+    padding-bottom: 10px; /* To ensure content fits comfortably */
+  }
+  
+  .horizontal-scroll .my-blog {
+    flex: 0 0 auto; /* Prevent shrinking */
+    scroll-snap-align: start;
+    width: 300px; /* Adjust width as needed */
+  }
+  
+  .horizontal-scroll::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar for cleaner UI */
+  }
+  
