@@ -1,8 +1,19 @@
+import React, { useState } from 'react';
 import { ParallaxSection } from "../../component/ParallaxSection";
 import { JobHeadWide } from "./JobHeadWide";
 import { JobWebDevider } from "./JobWebDevider";
+import { ApplicationForm } from '../../component/ApplicationForm';
 
 export const JobDetails = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openPopup = () => {
+        setIsOpen(true);
+    }
+
+    const closePopup = () => {
+        setIsOpen(false);
+    }
     return(
     <>
         <ParallaxSection title="Application Developer For Android" />
@@ -12,7 +23,7 @@ export const JobDetails = () => {
 				<div class="row">
 				 	<div class="col-lg-12 column">
 				 		<div class="job-single-sec style3">
-                            <JobHeadWide />
+                            <JobHeadWide openPopup={openPopup}/>
                             <JobWebDevider />
                         </div>
                     </div>
@@ -20,6 +31,9 @@ export const JobDetails = () => {
             </div>
         </div>
         </section>
+        {isOpen && (
+            <ApplicationForm isOpen={isOpen} closePopup={closePopup}/>
+        )}
     </>
     );
 }

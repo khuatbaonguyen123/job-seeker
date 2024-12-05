@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export  const JobHeadWide = () => {
+export  const JobHeadWide = ({openPopup}) => {
   return (
     <div className="job-head-wide">
       <div className="row">
@@ -33,7 +33,7 @@ export  const JobHeadWide = () => {
           {/* Job Head */}
         </div>
         <div className="col-lg-4">
-          <a className="apply-thisjob" href="#" title="">
+          <a className="apply-thisjob" href="#" title="" onClick={openPopup}>
             <i className="la la-paper-plane"></i>Apply for job
           </a>
           <div className="apply-alternative">

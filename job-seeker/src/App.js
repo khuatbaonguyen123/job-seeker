@@ -4,6 +4,10 @@ import { ApplicationForm } from './component/ApplicationForm';
 import { Layout } from './component/layout/layout';
 import { JobDetails } from './pages/JobDetails/JobDetails';
 import { Search } from './pages/Search/search';
+import { JobPost } from './pages/Employer/JobPost/JobPost';
+import { JobManager } from './pages/Employer/JobManager/JobManage';
+import { ApplicantManager } from './pages/Employer/ApplicantManager/ApplicantManage';
+
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.css';
@@ -40,6 +44,27 @@ function App() {
           element={
            <Layout>
             <Search/>
+           </Layout>
+        }/>
+        <Route 
+          path="/job-post" 
+          element={
+           <Layout>
+            <JobPost/>
+           </Layout>
+        }/>
+        <Route 
+          path="/job-manage" 
+          element={
+           <Layout>
+            <JobManager/>
+           </Layout>
+        }/>
+        <Route 
+          path="/employer-applicant-manage" 
+          element={
+           <Layout>
+            <ApplicantManager/>
            </Layout>
         }/>
       </Routes>
