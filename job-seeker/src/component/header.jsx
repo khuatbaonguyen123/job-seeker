@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import SignupForm from "./signupForm";
-import { SigninForm } from "./signinForm";
+import { useLocation } from "react-router-dom";
+import { SignupForm } from "../pages/Authentication/signupForm";
+import { SigninForm } from "../pages/Authentication/signinForm";
 
 export const Header = () => {
   const [isSigninOpen, setIsSigninOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const location = useLocation();
 
   const toggleBodyScroll = (shouldDisable) => {
     if (shouldDisable) {
@@ -38,6 +41,25 @@ export const Header = () => {
     console.log("close signup");
   };
 
+  const handleScroll = () => {
+    if (
+      window.scrollY > 100 &&
+      !["/signup", "/signin"].includes(location.pathname)
+    ) {
+      setIsSticky(true); // Make sticky only if not on /signup or /signin
+    } else {
+      setIsSticky(false); // Remove sticky class when at the top or on the signup/signin pages
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll); // Add scroll event listener
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [location.pathname]);
+
   return (
     <>
       <div className="responsive-header">
@@ -62,12 +84,28 @@ export const Header = () => {
               <i className="la la-plus"></i>Post Jobs
             </a>
             <ul className="account-btns">
-              <li className="signup-popup" onClick={openSignupPopup}>
+              <li
+                className="signup-popup"
+                onClick={openSignupPopup}
+                style={{
+                  display: ["/signup", "/signin"].includes(location.pathname)
+                    ? "none"
+                    : "",
+                }}
+              >
                 <a className="signup" href="#">
                   <i className="la la-key"></i> Sign Up
                 </a>
               </li>
-              <li className="signin-popup" onClick={openSigninPopup}>
+              <li
+                className="signin-popup"
+                onClick={openSigninPopup}
+                style={{
+                  display: ["/signup", "/signin"].includes(location.pathname)
+                    ? "none"
+                    : "",
+                }}
+              >
                 <a className="signin" href="#">
                   <i className="la la-external-link-square"></i> Login
                 </a>
@@ -406,12 +444,21 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <header className="gradient">
+
+      <header
+        className={`stick-top forsticky ${isSticky ? "sticky" : ""}`}
+        style={isSticky ? { backgroundColor: "red !important" } : {}}
+      >
         <div className="menu-sec">
           <div className="container">
-            <div className="logo">
+            <div class="logo">
               <a href="index.html" title="">
-                <img src="images/resource/logo.png" alt="" />
+                <img class="hidesticky" src="images/resource/logo.png" alt="" />
+                <img
+                  class="showsticky"
+                  src="images/resource/logo10.png"
+                  alt=""
+                />
               </a>
             </div>
             <div className="btn-extars">
@@ -419,12 +466,28 @@ export const Header = () => {
                 <i className="la la-plus"></i>Post Jobs
               </a>
               <ul className="account-btns">
-                <li className="signup-popup" onClick={openSignupPopup}>
+                <li
+                  className="signup-popup"
+                  onClick={openSignupPopup}
+                  style={{
+                    display: ["/signup", "/signin"].includes(location.pathname)
+                      ? "none"
+                      : "",
+                  }}
+                >
                   <a title="">
                     <i className="la la-key"></i> Sign Up
                   </a>
                 </li>
-                <li className="signin-popup" onClick={openSigninPopup}>
+                <li
+                  className="signin-popup"
+                  onClick={openSigninPopup}
+                  style={{
+                    display: ["/signup", "/signin"].includes(location.pathname)
+                      ? "none"
+                      : "",
+                  }}
+                >
                   <a title="">
                     <i className="la la-external-link-square"></i> Login
                   </a>
@@ -754,21 +817,26 @@ export const Header = () => {
           </div>
         </div>
       </header>
-      
+
       {isSigninOpen && (
-        <SigninForm
-        isSigninOpen={isSigninOpen}
-        closeSigninPopup={closeSigninPopup}
-      />
+        <div
+          className={`account-popup-area signin-popup-box ${
+            isSigninOpen ? "show" : ""
+          }`}
+        >
+          <SigninForm closeSigninPopup={closeSigninPopup} />
+        </div>
       )}
 
       {isSignupOpen && (
-        <SignupForm
-          isSignupOpen={isSignupOpen}
-          closeSignupPopup={closeSignupPopup}
-        />
+        <div
+          className={`account-popup-area signup-popup-box ${
+            isSignupOpen ? "show" : ""
+          }`}
+        >
+          <SignupForm closeSignupPopup={closeSignupPopup} />
+        </div>
       )}
     </>
   );
 };
-

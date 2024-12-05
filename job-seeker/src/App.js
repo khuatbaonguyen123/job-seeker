@@ -7,6 +7,8 @@ import { Search } from './pages/Search/search';
 import { JobPost } from './pages/Employer/JobPost/JobPost';
 import { JobManager } from './pages/Employer/JobManager/JobManage';
 import { ApplicantManager } from './pages/Employer/ApplicantManager/ApplicantManage';
+import { Homepage } from './pages/Homepage/Homepage';
+import { AuthenticationLayout } from './pages/Authentication/authenticationLayout';
 
 
 // CSS
@@ -19,7 +21,6 @@ import 'animate.css'
 import 'line-awesome/dist/line-awesome/css/line-awesome.min.css';
 import'./component/css/pagination.css';
 
-
 function App() {
   return (
     <>
@@ -29,7 +30,7 @@ function App() {
           path="/" 
           element={
            <Layout>
-
+            <Homepage />
            </Layout>
         }/>
         <Route 
@@ -65,6 +66,20 @@ function App() {
           element={
            <Layout>
             <ApplicantManager/>
+           </Layout>
+        }/>
+        <Route 
+          path="/signin" 
+          element={
+           <Layout>
+            <AuthenticationLayout signup={false}/>
+           </Layout>
+        }/>
+        <Route 
+          path="/signup" 
+          element={
+           <Layout>
+            <AuthenticationLayout signup={true}/>
            </Layout>
         }/>
       </Routes>
