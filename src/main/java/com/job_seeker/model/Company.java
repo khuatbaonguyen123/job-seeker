@@ -2,45 +2,63 @@ package com.job_seeker.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "Company")
 public class Company {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(name = "MinimumEmployees")
-    private int minimumEmployees;
+    @Column(name = "Name", nullable = false)
+    private String name;
 
-    @Column(name = "MaximumEmployees")
-    private int maximumEmployees;
+    @ManyToOne
+    @JoinColumn(name = "IndustryID", nullable = false)
+    private Industry industry;
+
+    @Column(name = "WebsiteURL")
+    private String websiteUrl;
 
     @Column(name = "Description")
     private String description;
 
+    @OneToMany(mappedBy = "company")
+    private Set<Employer> employers;
+
     // Getters and Setters
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getMinimumEmployees() {
-        return minimumEmployees;
+    public String getName() {
+        return name;
     }
 
-    public void setMinimumEmployees(int minimumEmployees) {
-        this.minimumEmployees = minimumEmployees;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getMaximumEmployees() {
-        return maximumEmployees;
+    public Industry getIndustry() {
+        return industry;
     }
 
-    public void setMaximumEmployees(int maximumEmployees) {
-        this.maximumEmployees = maximumEmployees;
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
+    }
+
+    public String getWebsiteUrl() {
+        return websiteUrl;
+    }
+
+    public void setWebsiteUrl(String websiteUrl) {
+        this.websiteUrl = websiteUrl;
     }
 
     public String getDescription() {
@@ -50,5 +68,12 @@ public class Company {
     public void setDescription(String description) {
         this.description = description;
     }
-}
 
+    public Set<Employer> getEmployers() {
+        return employers;
+    }
+
+    public void setEmployers(Set<Employer> employers) {
+        this.employers = employers;
+    }
+}

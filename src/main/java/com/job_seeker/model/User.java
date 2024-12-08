@@ -18,6 +18,15 @@ public class User {
     @Column(name = "Password", nullable = false)
     private String password;
 
+    @OneToOne(mappedBy = "user")
+    private Employer employer;
+
+    @OneToOne(mappedBy = "user")
+    private Admin admin;
+
+    @OneToOne(mappedBy = "user")
+    private Candidate candidate;
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -49,6 +58,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 }
 
