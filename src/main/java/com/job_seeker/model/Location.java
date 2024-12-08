@@ -9,7 +9,7 @@ import java.util.Set;
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "Name", nullable = false)
     private String name;

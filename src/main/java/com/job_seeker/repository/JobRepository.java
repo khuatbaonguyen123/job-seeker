@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface JobRepository extends JpaRepository<Job, Integer> {
     List<Job> findByTitleContainingIgnoreCase(String keyword);
 
     List<Job> findByJobDescriptionContainingIgnoreCase(String keyword);
+
+    Optional<Job> findById(Integer id);
 }

@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "UserID", unique = true)
