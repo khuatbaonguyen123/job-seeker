@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const SigninForm = ({ closeSigninPopup }) => {
   const [username, setUsername] = useState("");
@@ -9,28 +10,16 @@ const SigninForm = ({ closeSigninPopup }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/auth/api/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password
-        }),
+      const response = await axios.post("http://localhost:8080/auth/api/signin", {
+        username,
+        password,
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed. Please check your credentials.");
-      }
-
-      const data = await response.json();
-
       // Handle success (e.g., save token, navigate to another page)
-      console.log("Login successful:", data);
-    } catch (error) {
+      console.log("Login successful:", response.data);
+    } catch (err) {
       // Handle error
-      setError(error.message);
+      setError(err.response?.data?.message || "Login failed. Please check your credentials.");
     }
   };
 

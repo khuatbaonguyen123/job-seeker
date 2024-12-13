@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const SignupForm = ({ closeSignupPopup }) => {
   const [username, setUsername] = useState("");
@@ -10,29 +11,17 @@ const SignupForm = ({ closeSignupPopup }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-          email
-        }),
+      const response = await axios.post("http://localhost:8080/api/auth/signup", {
+        username,
+        password,
+        email,
       });
 
-      if (!response.ok) {
-        throw new Error("Signup failed. Please try again.");
-      }
-
-      const data = await response.json();
-
       // Handle success (e.g., show confirmation, navigate to login page)
-      console.log("Signup successful:", data);
-    } catch (error) {
+      console.log("Signup successful:", response.data);
+    } catch (err) {
       // Handle error
-      setError(error.message);
+      setError(err.response?.data?.message || "Signup failed. Please try again.");
     }
   };
 
