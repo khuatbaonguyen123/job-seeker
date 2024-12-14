@@ -11090,6 +11090,7 @@ footer.ft .scrollup {
 }
 .forsticky {
     position: absolute;
+    background: inherit;
     left: 0;
     top: 0;
 }
@@ -11112,7 +11113,7 @@ footer.ft .scrollup {
     position: fixed;
     left: 0;
     top: 0;
-    background: #ffffff;
+    background: #e7e5f9;
      -webkit-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
     -ms-box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
@@ -11824,4 +11825,13 @@ header.style4 .account-btns > li a,
     -ms-transition: all 0.4s ease 0s;
     -o-transition: all 0.4s ease 0s;
     transition: all 0.4s ease 0s;
+}
+
+a::before {
+    content: none !important;
+}
+
+html {
+    overflow-y: scroll !important;
+    scrollbar-width: none;
 }
