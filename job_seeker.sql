@@ -1,6 +1,6 @@
-CREATE DATABASE job_seeker_2;
+CREATE DATABASE job_seeker;
 
-USE job_seeker_2;
+USE job_seeker;
 
 CREATE TABLE `User` (
   `ID` int PRIMARY KEY AUTO_INCREMENT,
