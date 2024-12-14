@@ -20,6 +20,9 @@ public class JobService {
     @Autowired
     private JobRepository jobRepository;
 
+    public void createJob(Job job) {
+        jobRepository.save(job);
+    }
     public List<JobResponse> searchJobs(String keyword) {
         List<Job> jobs = jobRepository.findByTitleContainingIgnoreCase(keyword);
         List<Job> jobsByDescription = jobRepository.findByJobDescriptionContainingIgnoreCase(keyword);
