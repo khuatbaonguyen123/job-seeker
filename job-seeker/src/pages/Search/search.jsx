@@ -1,7 +1,38 @@
+import React, { useEffect, useState } from "react";
 import { JobFilterSidebar } from "../../component/filter";
 import {ParallaxSection} from "../../component/ParallaxSection";
+import { useLocation } from "react-router-dom";
 
 export const Search = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchKeyword = queryParams.get("keyword");
+
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Gọi API khi từ khóa tìm kiếm thay đổi
+  useEffect(() => {
+    if (searchKeyword) {
+      setLoading(true);
+      setError(null);
+
+      fetch(`http://localhost:8080/api/jobs/search?keyword=${searchKeyword}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setJobs(data); // Lưu danh sách công việc vào state
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError("Something went wrong");
+          setLoading(false);
+        });
+    }
+  }, [searchKeyword]); // Hook này sẽ gọi API mỗi khi từ khóa thay đổi
+
+
+  console.log(searchKeyword);
     return (
         <>
         <ParallaxSection title="Job List"/>
@@ -10,7 +41,7 @@ export const Search = () => {
 			<div class="container">
 				 <div class="row no-gape">
                     <JobFilterSidebar/>
-                    <JobList/>
+                    <JobList jobs={jobs} searchKeyword={searchKeyword}/>
                  </div>
             </div>
         </div>
@@ -20,67 +51,42 @@ export const Search = () => {
    
 };
 
-const JobList = () => {
+const JobList = ({ jobs, searchKeyword }) => {
     return (
       <div className="col-lg-9 column">
-        <div className="modrn-joblist">
-          <div className="tags-bar">
-            <span>Full Time<i className="close-tag">x</i></span>
-            <span>UX/UI Design<i className="close-tag">x</i></span>
-            <span>Istanbul<i className="close-tag">x</i></span>
-            <div className="action-tags">
-              <a href="#" title=""><i className="la la-cloud-download"></i> Save</a>
-              <a href="#" title=""><i className="la la-trash-o"></i> Clean</a>
-            </div>
-          </div>
-          {/* Tags Bar */}
-  
-          <div className="filterbar">
-            <span className="emlthis">
-              <a href="mailto:example.com" title="">
-                <i className="la la-envelope-o"></i> Email me Jobs Like These
-              </a>
-            </span>
-            <div className="sortby-sec">
-              <span>Sort by</span>
-              <select data-placeholder="Most Recent" className="chosen">
-                <option>Most Recent</option>
-                <option>30 Per Page</option>
-                <option>40 Per Page</option>
-                <option>50 Per Page</option>
-              </select>
-              <select data-placeholder="20 Per Page" className="chosen">
-                <option>20 Per Page</option>
-                <option>30 Per Page</option>
-                <option>40 Per Page</option>
-              </select>
-            </div>
+        <div className="filterbar">
             <h5>1 Job & Vacancy</h5>
-          </div>
-          {/* Filter Bar */}
-        </div>
-  
-        <div className="job-list-modern">
-          <div className="job-listings-sec">
-            <div className="job-listing wtabs">
-              <div className="job-title-sec">
-                <div className="c-logo">
-                  <img src="images/resource/l1.png" alt="Company Logo" />
-                </div>
-                <h3><a href="#" title="">Web Designer / Developer</a></h3>
-                <span>Massimo Artemisis</span>
-                <div className="job-lctn">
-                  <i className="la la-map-marker"></i>Sacramento, California
-                </div>
-              </div>
-              <div className="job-style-bx">
-                <span className="job-is ft">Full time</span>
-                <span className="fav-job"><i className="la la-heart-o"></i></span>
-                <i>5 months ago</i>
-              </div>
             </div>
-            {/* Single Job Listing */}
-          </div>
+        <div className="job-list-modern">
+        <div className="job-listings-sec">
+          {jobs.length > 0 ? (
+            jobs.map((job) => (
+              <div key={job.id} className="job-listing wtabs">
+                <div className="job-title-sec">
+                  <div className="c-logo">
+                    <img src="images/resource/l1.png" alt="Company Logo" />
+                  </div>
+                  <h3>
+                    <a href={`/job-details/${job.id}`} title="">
+                      {job.title}
+                    </a>
+                  </h3>
+                  <span>{job.companyName}</span>
+                  <div className="job-lctn">
+                    <i className="la la-map-marker"></i>
+                    {job.locationName}
+                  </div>
+                </div>
+                <div className="job-style-bx">
+                  <span className="job-is ft">{job.employmentTypeName}</span>
+                  <i>{job.postedDate}</i>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No jobs found for "{searchKeyword}"</p>
+          )}
+        </div>
         </div>
       </div>
     );

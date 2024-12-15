@@ -22,7 +22,7 @@ export const EmployerDashboardSidebar = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/post-new-job" title="">
+                  <a href="/job-post" title="">
                     <i className="la la-file-text"></i>Post a New Job
                   </a>
                 </li>

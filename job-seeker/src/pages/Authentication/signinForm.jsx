@@ -10,7 +10,7 @@ const SigninForm = ({ closeSigninPopup }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/auth/api/signin", {
+      const response = await axios.post("http://localhost:8080/api/auth/signin", {
         username,
         password,
       });

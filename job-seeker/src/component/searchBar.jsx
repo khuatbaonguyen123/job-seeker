@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import { useNavigate } from "react-router-dom";
+
+
 
 const SearchBar = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -15,6 +18,14 @@ const SearchBar = () => {
     setSelectedOption(selected);
   };
 
+  const navigate = useNavigate();
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const handleSearch = () => {
+    // Điều hướng đến trang /search với query string keyword
+    navigate(`/search?keyword=${searchKeyword}`);
+  };
+
   return (
     <>
       <div class="job-search-sec">
@@ -27,6 +38,8 @@ const SearchBar = () => {
                 <div class="job-field">
                   <input
                     type="text"
+                    value={searchKeyword}
+        onChange={(e) => setSearchKeyword(e.target.value)}
                     placeholder="Job title, keywords or company name"
                   />
                   <i class="la la-keyboard-o"></i>
@@ -58,7 +71,7 @@ const SearchBar = () => {
                 </div>
               </div>
               <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-                <button type="submit">
+                <button onClick={handleSearch}>
                   <i class="la la-search"></i>
                 </button>
               </div>

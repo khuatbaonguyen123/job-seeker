@@ -19,11 +19,14 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity<String> postJob(@RequestBody Job job) {
         jobService.createJob(job);
         return new ResponseEntity<>("Job post successfully", HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/search")
     public ResponseEntity<List<JobResponse>> searchJobs(@RequestParam String keyword) {
         List<JobResponse> jobs = jobService.searchJobs(keyword);

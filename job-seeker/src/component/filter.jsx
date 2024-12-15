@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export const JobFilterSidebar = () => {
    // State để quản lý trạng thái mở/đóng từng widget
@@ -23,13 +25,24 @@ export const JobFilterSidebar = () => {
     }));
   };
 
+  const navigate = useNavigate();
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const handleSearch = () => {
+    // Điều hướng đến trang /search với query string keyword
+    navigate(`/search?keyword=${searchKeyword}`);
+  };
+
   return (
     <aside className="col-lg-3 column border-right">
         <div className="widget">
         <div className="search_widget_job">
           <div className="field_w_search">
-            <input type="text" placeholder="Search Keywords" />
-            <i className="la la-search"></i>
+            <input type="text" 
+             value={searchKeyword}
+             onChange={(e) => setSearchKeyword(e.target.value)}
+            placeholder="Search Keywords" />
+            <i onClick={handleSearch} className="la la-search"></i>
           </div>
           <div className="field_w_search">
             <input type="text" placeholder="All Locations" />
