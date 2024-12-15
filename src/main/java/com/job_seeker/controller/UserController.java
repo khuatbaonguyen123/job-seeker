@@ -13,6 +13,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody UserDTO userDTO) {
         try {
@@ -23,6 +24,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signin")
     public ResponseEntity<String> signIn(@RequestBody LogInDTO logInDTO) throws Exception {
         try {

@@ -34,7 +34,7 @@ function App() {
            </Layout>
         }/>
         <Route 
-          path="/job-details" 
+          path="/job-details/:id" 
           element={
            <Layout>
             <JobDetails/>

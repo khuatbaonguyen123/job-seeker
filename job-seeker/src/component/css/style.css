@@ -5351,6 +5351,10 @@ aside .widget.border:first-child {
     float: left;
     width: 100%;
     padding-top: 30px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;  /* Căn giữa theo chiều ngang */
+    align-items: center;      /* Căn giữa theo chiều dọc */
 }
 .apply-alternative a {
     float: left;
@@ -5376,12 +5380,15 @@ aside .widget.border:first-child {
     margin-top: 12px;
 }
 .apply-alternative span {
-    float: right;
+    float: inherit;
     border: 2px solid #e8ecec;
     font-size: 13px;
     color: #888888;
     padding: 0 30px;
-    height: 50px; line-height: 50px;
+    /* /* height: 50px;  */
+    line-height: 50px;
+    width: 100%;
+    text-align: center;
     
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -5405,9 +5412,10 @@ aside .widget.border:first-child {
 
 .apply-alternative span i {
     font-size: 20px;
-    float: left;
+    /* float: left; */
     margin-right: 6px;
     margin-top: 14px;
+    /* position: relative; */
 }
 
 /* Job Overview */

@@ -23,12 +23,14 @@ public class JobController {
         return ResponseEntity.ok(jobs);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}/detail")
     public ResponseEntity<JobDetail> getJobDetail(@PathVariable Integer id) {
         JobDetail jobDetail = jobService.getJobDetail(id);
         return ResponseEntity.ok(jobDetail);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}/overview")
     public ResponseEntity<JobOverview> getJobOverview(@PathVariable Integer id) {
         JobOverview jobOverview = jobService.getJobOverview(id);
