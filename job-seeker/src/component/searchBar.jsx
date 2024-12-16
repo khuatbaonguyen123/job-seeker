@@ -21,9 +21,17 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const handleSearch = () => {
-    // Điều hướng đến trang /search với query string keyword
-    navigate(`/search?keyword=${searchKeyword}`);
+  const handleSearch = (e) => {
+    e.preventDefault(); // Ngăn chặn hành vi mặc định của form submit
+  
+  if (!searchKeyword || searchKeyword.trim() === "") {
+    // Điều hướng đến trang với keyword mặc định hoặc xử lý rỗng
+    navigate(`/search?keyword=%20`); // `%20` là khoảng trắng URL-encoded
+    return; // Kết thúc hàm
+  }
+  
+  // Điều hướng với keyword hợp lệ
+  navigate(`/search?keyword=${searchKeyword.trim()}`);
   };
 
   return (
@@ -32,9 +40,9 @@ const SearchBar = () => {
         <div class="job-search">
           <h3>The Easiest Way to Get Your New Job</h3>
           <span>Find Jobs, Employment & Career Opportunities</span>
-          <form>
+          <form onSubmit={handleSearch}>
             <div class="row">
-              <div class="col-lg-7 col-md-5 col-sm-12 col-xs-12">
+              <div class="col-lg-10 col-md-5 col-sm-12 col-xs-12">
                 <div class="job-field">
                   <input
                     type="text"
@@ -45,33 +53,9 @@ const SearchBar = () => {
                   <i class="la la-keyboard-o"></i>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
-                <div class="job-field">
-                  <Select
-                    value={selectedOption}
-                    onChange={handleChange}
-                    options={options}
-                    placeholder="City, province or region"
-                    components={{
-                      IndicatorSeparator: () => null, // Hides the separator
-                      DropdownIndicator: () => null, // Hides the dropdown icon
-                    }}
-                    className="chosen-city"
-                    styles={{
-                      control: (provided) => ({
-                        ...provided,
-                        height: 61, // Set the height of the select box
-                        borderRadius: 8,
-                        alignContent: 'center',
-                        fontSize: 13
-                      }),
-                    }}
-                  />
-                  <i class="la la-map-marker" style={{right : '5%'}}></i>
-                </div>
-              </div>
+              
               <div class="col-lg-1 col-md-2 col-sm-12 col-xs-12">
-                <button onClick={handleSearch}>
+                <button type="submit">
                   <i class="la la-search"></i>
                 </button>
               </div>

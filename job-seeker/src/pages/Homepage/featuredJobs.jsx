@@ -1,66 +1,44 @@
-import React, { useState } from "react";
-
-//sample
-const featuredJobs = [
-  {
-    companyLogo: "images/resource/l1.png",
-    title: "Web Designer / Developer",
-    companyName: "Massimo Artemisis",
-    location: "Sacramento, California",
-    type: "FULL TIME",
-    typeClass: "ft",
-  },
-  {
-    companyLogo: "images/resource/l2.png",
-    title: "Marketing Director",
-    companyName: "Tix Dog",
-    location: "Rennes, France",
-    type: "PART TIME",
-    typeClass: "pt",
-  },
-  {
-    companyLogo: "images/resource/l3.png",
-    title: "C Developer (Senior) C .Net",
-    companyName: "StarHealth",
-    location: "London, United Kingdom",
-    type: "FULL TIME",
-    typeClass: "ft",
-  },
-  {
-    companyLogo: "images/resource/l4.png",
-    title: "Application Developer For Android",
-    companyName: "Altes Bank",
-    location: "Istanbul, Turkey",
-    type: "FREELANCE",
-    typeClass: "fl",
-  },
-  {
-    companyLogo: "images/resource/l5.png",
-    title: "Regional Sales Manager South east Asia",
-    companyName: "Vincent",
-    location: "Ajax, Ontario",
-    type: "TEMPORARY",
-    typeClass: "tp",
-  },
-  {
-    companyLogo: "images/resource/l6.png",
-    title: "Social Media and Public Relation Executive",
-    companyName: "MediaLab",
-    location: "Ankara / Turkey",
-    type: "FULL TIME",
-    typeClass: "ft",
-  },
-];
+import React, { useState, useEffect } from "react";
 
 export const FeaturedJobs = () => {
-  const [favorites, setFavorites] = useState({}); // Track favorite status by job index
+  const [jobs, setJobs] = useState([]); // Lưu danh sách công việc từ API
+  const [loading, setLoading] = useState(true); // Trạng thái tải dữ liệu
+  const [error, setError] = useState(null); // Trạng thái lỗi
+  const [favorites, setFavorites] = useState({}); // Quản lý trạng thái yêu thích
 
   const toggleFavorite = (index) => {
     setFavorites((prev) => ({
       ...prev,
-      [index]: !prev[index], // Toggle favorite status for the job
+      [index]: !prev[index], // Chuyển đổi trạng thái yêu thích
     }));
   };
+
+  // Fetch API khi component được render lần đầu
+  useEffect(() => {
+    fetch("http://localhost:8080/api/jobs/search?keyword=%20")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch jobs");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setJobs(data); // Cập nhật danh sách công việc
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message); // Lưu thông báo lỗi
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <p>Loading jobs...</p>; // Hiển thị thông báo tải
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>; // Hiển thị thông báo lỗi
+  }
 
   return (
     <section>
@@ -73,12 +51,15 @@ export const FeaturedJobs = () => {
                 <span>Leading Employers already using job and talent.</span>
               </div>
               <div className="job-listings-sec">
-                {/* Render job listings dynamically */}
-                {featuredJobs.map((job, index) => (
+                {/* Render danh sách công việc từ API */}
+                {jobs.slice(0, 10).map((job, index) => (
                   <div key={index} className="job-listing">
                     <div className="job-title-sec">
                       <div className="c-logo">
-                        <img src={job.companyLogo} alt={job.companyName} />
+                        <img
+                          src={job.companyLogo || "images/resource/l1.png"} // Sử dụng logo mặc định nếu thiếu
+                          alt={job.companyName}
+                        />
                       </div>
                       <h3>
                         <a href="#" title="">
@@ -89,11 +70,11 @@ export const FeaturedJobs = () => {
                     </div>
                     <span className="job-lctn">
                       <i className="la la-map-marker"></i>
-                      {job.location}
+                      {job.locationName}
                     </span>
                     <span
                       className="fav-job"
-                      onClick={() => toggleFavorite(index)} // Add click handler
+                      onClick={() => toggleFavorite(index)} // Xử lý click
                       style={{ cursor: "pointer" }}
                     >
                       <i
@@ -101,18 +82,18 @@ export const FeaturedJobs = () => {
                           favorites[index] ? "la-heart" : "la-heart-o"
                         }`}
                         style={{
-                          color: favorites[index] ? "red" : "inherit", // Change color when favorited
+                          color: favorites[index] ? "red" : "inherit", // Đổi màu khi yêu thích
                         }}
                       ></i>
                     </span>
-                    <span className={`job-is ${job.typeClass}`}>{job.type}</span>
+                    <span className={`job-is ${job.typeClass}`}>{job.employmentTypeName}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="col-lg-12">
               <div className="browse-all-cat">
-                <a href="#" title="">
+                <a href="/search?keyword=%20" title="">
                   Load more listings
                 </a>
               </div>

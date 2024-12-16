@@ -55,7 +55,7 @@ const JobList = ({ jobs, searchKeyword }) => {
     return (
       <div className="col-lg-9 column">
         <div className="filterbar">
-            <h5>1 Job & Vacancy</h5>
+            <h5>{jobs.length} Job & Vacancy</h5>
             </div>
         <div className="job-list-modern">
         <div className="job-listings-sec">
