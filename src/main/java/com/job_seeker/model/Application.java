@@ -35,5 +35,10 @@ public class Application {
     @Enumerated(EnumType.STRING)
     @Column(name = "status",nullable = false)
     private Status status;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Timestamp(System.currentTimeMillis());
+    }
 }
 
